@@ -5,8 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Catalog from './Catalog';
-import Item from './Item';
+import Catalog from './components/Catalog';
+import Item from './components/Item';
 
 const useStyles = makeStyles(theme => ({
   header: {
