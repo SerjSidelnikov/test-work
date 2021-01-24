@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -10,8 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Filter from './Filter';
-
-import data from '../data.js';
+import {getProducts} from '../store/productsSlice';
 
 const tableHead = ['Фото', 'Наименование', 'Производитель', 'Упаковка', 'Цена'];
 
@@ -32,6 +32,7 @@ const useStyles = makeStyles(() => ({
 const Catalog = () => {
   const classes = useStyles();
   const history = useHistory();
+  const products = useSelector(getProducts);
 
   const handleClickItem = id => () => {
     history.push(`/catalog/${id}`);
@@ -52,7 +53,7 @@ const Catalog = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map(item => (
+              {products.map(item => (
                 <TableRow
                   hover
                   key={item.id}

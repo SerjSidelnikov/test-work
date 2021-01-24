@@ -1,11 +1,12 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-import data from '../data';
+import {getProductsId} from '../store/productsSlice';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,8 +32,7 @@ const Item = () => {
   const classes = useStyles();
   const { id } = useParams();
   const history = useHistory();
-
-  const item = data.find(el => el.id === id);
+  const item = useSelector(state => getProductsId(state, id));
 
   const handleBack = () => history.goBack();
 
