@@ -1,29 +1,31 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import data from '../data';
+export const fetchData = createAsyncThunk('products/fetchData', async () => {
+  const response = await fetch('http://localhost:3001/products');
+  return response.json();
+});
 
 export const slice = createSlice({
   name: 'products',
 
   initialState: {
-    data: data,
-    isLoading: false,
+    data: null,
+    isLoading: true,
   },
 
-  reducers: {
-    setItem: (state, action) => {
-      state.products = action.payload;
+  extraReducers: {
+    [fetchData.pending]: (state) => {
+      state.isLoading = true;
     },
-
-    isSuccess: state => {
+    [fetchData.fulfilled]: (state, action) => {
+      state.data = action.payload;
       state.isLoading = false;
-    },
-  },
+    }
+  }
 });
 
 export default slice.reducer;
 
-export const {setItem, isSuccess} = slice.actions;
-
+export const getIsLoading = (state) => state.products.isLoading;
 export const getProducts = (state) => state.products.data;
 export const getProductsId = (state, id) => state.products.data.find(item => item.id === id);
